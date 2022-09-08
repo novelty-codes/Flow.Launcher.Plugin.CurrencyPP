@@ -1,0 +1,12 @@
+{
+    "ID": "84d9d550-80cb-4e5f-a090-e1ccf3237a40",
+    "ActionKeyword": "*",
+    "Name": "Currency Converter",
+    "Description": "",
+    "Author": "Le Loc Tai",
+    "Version": "1.0.0",
+    "Language": "python",
+    "Website": "https://github.com/LeLocTai/Flow.Launcher.Plugin.Currency",
+    "IcoPath": "src/currency.png",
+    "ExecuteFileName": "main.py"
+}

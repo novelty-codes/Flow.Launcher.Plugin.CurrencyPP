@@ -1,5 +1,5 @@
-import keypirinha_net as kpnet
 import urllib
+import urllib.request as request
 import json
 
 
@@ -14,8 +14,8 @@ class PrivateDomain():
         return self.url
 
     def load_from_url(self):
-        self.plugin.info("loading from cache server...")
-        opener = kpnet.build_urllib_opener()
+        self.plugin.logger.info("loading from cache server...")
+        opener = request.build_opener()
         opener.addheaders = [("User-agent", "Mozilla/5.0")]
 
         requestURL = self.build_request()
@@ -49,8 +49,8 @@ class OpenExchangeRates():
         return self.url + '?' + urllib.parse.urlencode(parameters)
 
     def load_from_url(self):
-        self.plugin.info("loading from API...")
-        opener = kpnet.build_urllib_opener()
+        self.plugin.logger.info("loading from API...")
+        opener = request.build_opener()
 
         params = {'app_id': self.app_id,
                   'show_alternative': True}

@@ -1,4 +1,4 @@
-from .parsy import regex, generate, alt, string, seq, Parser, Result
+from parsy import regex, generate, alt, string, seq, Parser, Result
 import operator
 
 # Grammar
@@ -40,9 +40,9 @@ class ParserProperties(object):
 
 def make_parser(properties):
     whitespace = regex(r'\s*')
-    lexeme = lambda p: p << whitespace
+    def lexeme(p): return p << whitespace
 
-    s = lambda p: lexeme(string(p))
+    def s(p): return lexeme(string(p))
     numberRegex = r'(0|[1-9][0-9]*)([.,][0-9]+)?([eE][+-]?[0-9]+)?'
     number = lexeme(regex(numberRegex)
                     .map(lambda x: x.replace(',', '.'))
@@ -80,7 +80,7 @@ def make_parser(properties):
                 return Result.failure(index, 'currency code')
 
             if word in properties.to_keywords or word in properties.sep_keywords:
-                return Result.failure(origIndex, word + ' is a reserved keyword')
+                return Result.failure(origIndex, word + ' is a reserved keyword ' + ','.join(properties.to_keywords) + ';' + ','.join(properties.sep_keywords))
             return Result.success(index, word)
 
         return (yield lexeme(code))

@@ -1,6 +1,6 @@
 from datetime import datetime
 from enum import Enum
-from .webservice import OpenExchangeRates, PrivateDomain
+from webservice import OpenExchangeRates, PrivateDomain
 
 import json
 import os
@@ -76,16 +76,19 @@ class ExchangeRates():
             try:
                 self._currencies, update_time = self.cheap_service.load_from_url()
                 self.last_update = datetime.now()
-                time_diff = self.last_update - datetime.fromtimestamp(update_time)
+                time_diff = self.last_update - \
+                    datetime.fromtimestamp(update_time)
             except Exception as e:
-                self.plugin.info('cache server has returned error. Requesting from main API')
-                self.plugin.err(e)
+                self.plugin.logger.info(
+                    'cache server has returned error. Requesting from main API')
+                self.plugin.logger.error(e)
                 if not self.has_custom_app_id():
                     return False
                 self._currencies, update_time = self.expensive_service.load_from_url()
 
             if (time_diff.total_seconds() > 3600 * 2):
-                self.plugin.info('cache server is more than 2 hours old. Requesting from main API')
+                self.plugin.logger.info(
+                    'cache server is more than 2 hours old. Requesting from main API')
                 if not self.has_custom_app_id():
                     return False
                 self._currencies, update_time = self.expensive_service.load_from_url()
@@ -94,23 +97,25 @@ class ExchangeRates():
             self.error = None
             return True
         except Exception as e:
-            self.plugin.err(e)
+            self.plugin.logger.error(e)
             self.error = e
             return False
 
     def has_custom_app_id(self):
         if self.expensive_service.app_id:
             return True
-        self.plugin.err('No OpenExchangeRates App ID declared in the configuration file.')
-        self.error = Exception('The cache has failed. More information (and a fix) are available in the Currency plugin configuration file.')
+        self.plugin.logger.error(
+            'No OpenExchangeRates App ID declared in the configuration file.')
+        self.error = Exception(
+            'The cache has failed. More information (and a fix) are available in the Currency plugin configuration file.')
         return False
-
 
     def load_from_file(self):
         with open(self._file_path) as f:
             data = json.load(f)
 
-        self.last_update = datetime.strptime(data['last_update'], '%Y-%m-%dT%H:%M:%S')
+        self.last_update = datetime.strptime(
+            data['last_update'], '%Y-%m-%dT%H:%M:%S')
         self._currencies = data['rates']
         self._load_secondary_data()
 
