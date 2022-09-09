@@ -1,8 +1,7 @@
-import traceback
 from exchange import ExchangeRates, UpdateFreq, CurrencyError
 from flox.utils import cache_path
 from parsy import ParseError
-from parser import make_parser, ParserProperties
+from currencyparser import make_parser, ParserProperties
 from flox import Flox, clipboard
 
 
