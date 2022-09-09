@@ -3,11 +3,10 @@ from exchange import ExchangeRates, UpdateFreq, CurrencyError
 from flox.utils import cache_path
 from parsy import ParseError
 from parser import make_parser, ParserProperties
-from flox import Flox
-from flox import clipboard
+from flox import Flox, clipboard
 
 
-class Currency(Flox):
+class CurrencyPP(Flox):
 
     broker = None
 
@@ -187,4 +186,4 @@ class Currency(Flox):
 
 
 if __name__ == "__main__":
-    Currency()
+    CurrencyPP()
