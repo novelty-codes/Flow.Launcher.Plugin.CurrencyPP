@@ -1,27 +1,22 @@
-# Keypirinha Plugin: Currency
+# Flow.Launcher.Plugin.CurrencyPP
 
-This is Currency, a currency converter plugin for the
-[Keypirinha](http://keypirinha.com) launcher.
+![demo](./demo.png)
+![settings](./settings.png)
 
-## Download
+A port of [Keypirinha Currency plugin](https://github.com/AvatarHurden/keypirinha-currency) to Flow launcher.
 
-https://github.com/AvatarHurden/keypirinha-currency/releases
+Compared to the existing [Currency Converter](https://github.com/deefrawley/Flow.Launcher.Plugin.Currency) plugin:
+ - Support [more currencies](https://docs.openexchangerates.org/reference/supported-currencies)
+ - Output multiple currencies
+ - Allow setting default currencies to convert from/to
+ - Customizable aliases. For example, 1$ can be configured to be USD or AUD
+ - Support math (see below)
 
+Below is an excerpt the original readme
 
-## Install
-
-Once the `Currency.keypirinha-package` file is installed,
-move it to the `InstalledPackage` folder located at:
-
-* `Keypirinha\portable\Profile\InstalledPackages` in **Portable mode**
-* **Or** `%APPDATA%\Keypirinha\InstalledPackages` in **Installed mode** (the
-  final path would look like
-  `C:\Users\%USERNAME%\AppData\Roaming\Keypirinha\InstalledPackages`)
+---
 
 ## Usage
-
-A `Convert Currency` item is inserted into the catalog.
-Select this item to enter conversion mode.
 
 For the most basic usage, simply enter the amount to convert, the source currency and the destination currency, such as `5 USD in EUR`.
 You can perform mathematical operations for the source amount, such as `10*(2+1) usd in EUR`, and you can even perform some math on the resulting amount `5 usd in EUR / 2`.
@@ -126,17 +121,3 @@ If this cache layer fails, however, the plugin quickly runs into this request li
 ### v1.0
 
 * Initial Release
-
-
-## License
-
-This package is distributed under the terms of the MIT license.
-
-## Contribute
-
-1. Check for open issues or open a fresh issue to start a discussion around a
-   feature idea or a bug.
-2. Fork this repository on GitHub to start making your changes to the **dev**
-   branch.
-3. Send a pull request.
-4. Add yourself to the *Contributors* section below (or create it if needed)!
