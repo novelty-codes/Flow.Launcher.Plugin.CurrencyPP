@@ -3,10 +3,10 @@
     "ActionKeyword": "*",
     "Name": "CurrencyPP",
     "Description": "A better currency converter",
-    "Author": "Le Loc Tai",
-    "Version": "3.0.1",
+    "Author": "Novelty Codes",
+    "Version": "3.1.0",
     "Language": "python",
-    "Website": "https://github.com/LeLocTai/Flow.Launcher.Plugin.CurrencyPP",
+    "Website": "https://github.com/novelty-codes/Flow.Launcher.Plugin.CurrencyPP",
     "IcoPath": "src/CurrencyPP.png",
     "ExecuteFileName": "main.py"
 }

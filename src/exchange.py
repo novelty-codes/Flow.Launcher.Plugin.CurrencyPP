@@ -180,6 +180,26 @@ class ExchangeRates():
         else:
             raise CurrencyError(codeString)
 
+    def resolve_currency_code(self, codeString):
+        """
+        Resolve a currency code or alias to the actual currency code.
+        Returns the resolved currency code or None if invalid.
+        """
+        if codeString is None:
+            return None
+        
+        code_upper = codeString.upper()
+        
+        # If it's a direct currency code
+        if code_upper in self._currencies:
+            return code_upper
+        
+        # If it's an alias, resolve it
+        if code_upper in self._aliases:
+            return self._aliases[code_upper]
+        
+        return None
+
     def format_number(self, number, fullDigits=False):
         if fullDigits:
             formatted = '{:,.8f}'.format(number).rstrip('0').rstrip('.')

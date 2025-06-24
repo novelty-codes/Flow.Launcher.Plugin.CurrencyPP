@@ -100,9 +100,22 @@ class CurrencyPP(Flox):
         if empty:
             query = {'sources': None}
         else:
+            # Filter out the default input currency from default output currencies
+            # Resolve the default input currency in case it's been set as an alias
+            resolved_default_input = self.broker.resolve_currency_code(self.broker.default_cur_in)
+            if resolved_default_input is None:
+                resolved_default_input = self.broker.default_cur_in
+            
+            filtered_output_curs = [
+                cur for cur in self.broker.default_curs_out 
+                if cur.upper() != resolved_default_input.upper()
+            ]
+            # If all currencies are filtered out, keep the original list
+            output_currencies = filtered_output_curs if filtered_output_curs else self.broker.default_curs_out
+            
             query = {
                 'sources': [{'currency': self.broker.default_cur_in, 'amount': 1.0}],
-                'destinations': [{'currency': cur} for cur in self.broker.default_curs_out],
+                'destinations': [{'currency': cur} for cur in output_currencies],
                 'extra': None
             }
 
@@ -114,7 +127,26 @@ class CurrencyPP(Flox):
         try:
             parsed = self.parser.parse(user_input)
             if not parsed['destinations'] and 'destinations' in query:
-                parsed['destinations'] = query['destinations']
+                # Filter out the input currency from default destinations
+                input_currency = None
+                if parsed['sources'] and len(parsed['sources']) > 0:
+                    input_currency = parsed['sources'][0]['currency']
+                
+                if input_currency:
+                    # Resolve the input currency (could be an alias)
+                    resolved_input_currency = self.broker.resolve_currency_code(input_currency)
+                    
+                    if resolved_input_currency:
+                        # Remove the resolved input currency from the default destinations
+                        filtered_destinations = [
+                            {'currency': cur} for cur in self.broker.default_curs_out 
+                            if cur.upper() != resolved_input_currency.upper()
+                        ]
+                        parsed['destinations'] = filtered_destinations if filtered_destinations else query['destinations']
+                    else:
+                        parsed['destinations'] = query['destinations']
+                else:
+                    parsed['destinations'] = query['destinations']
             return parsed
         except ParseError:
             return query

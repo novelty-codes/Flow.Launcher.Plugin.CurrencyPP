@@ -11,6 +11,7 @@ Compared to the existing [Currency Converter](https://github.com/deefrawley/Flow
  - Allow setting default currencies to convert from/to
  - Customizable aliases. For example, 1$ can be configured to be USD or AUD
  - Support math (see below)
+ - Smart filtering: automatically excludes the input currency from results
 
 Below is an excerpt the original readme
 
@@ -26,6 +27,15 @@ You can also convert into multiple destination currencies, such as `5 USD in EUR
 
 If you omit the name of a currency, such as in `5 USD` or `5 in USD`, the plugin will use the default currencies specified in the configuration file.
 You can also change what words and symbols are used between multiple destination currencies and between the source and destination.
+
+### Smart Currency Filtering
+
+The plugin automatically excludes the input currency from the conversion results to avoid redundant information. For example:
+- Typing `15 EUR` with default output currencies `EUR IDR USD GBP` will show conversions to IDR, USD, and GBP (EUR is excluded)
+- Typing `10 dollars` (if configured as an alias for USD) will exclude USD from the results
+- This works for both direct currency codes and custom aliases
+
+This feature ensures you only see relevant conversion results without the obvious identity conversion (e.g., 15 EUR = 15 EUR).
 
 ### Aliases
 
@@ -80,6 +90,13 @@ If this cache layer fails, however, the plugin quickly runs into this request li
 
 ## Change Log
 
+### v3.1
+* **Smart Currency Filtering**: Automatically excludes the input currency from conversion results
+* Input currency (including aliases) is now filtered out from default output currencies  
+* Prevents redundant results like "15 EUR = 15 EUR" from appearing in output
+* Works seamlessly with both direct currency codes and custom aliases
+* Improves user experience by showing only relevant conversions
+
 ### v2.2
 * Added workaround for situations in which the cache fails.
 
@@ -121,3 +138,4 @@ If this cache layer fails, however, the plugin quickly runs into this request li
 ### v1.0
 
 * Initial Release
+# Updated by novelty-codes
